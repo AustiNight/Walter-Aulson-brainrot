@@ -1,13 +1,12 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { StoryResult } from './types';
-import { PROFANITY_LIST } from './constants';
+import { StoryResult } from './types.ts';
+import { PROFANITY_LIST } from './constants.ts';
 
 const getSafeApiKey = (): string => {
-  // Use the process.env.API_KEY directly as required by system instructions.
-  // The shim in index.html ensures 'process' exists.
-  const key = process.env.API_KEY || '';
-  return key.replace(/['"]/g, '').trim();
+  // Directly access process.env.API_KEY as shimmed in index.html or provided by environment
+  const key = (process.env.API_KEY || '').replace(/['"]/g, '').trim();
+  return key;
 };
 
 export const moderateInput = (inputs: Record<string, string>): { isValid: boolean; errorField?: string } => {
