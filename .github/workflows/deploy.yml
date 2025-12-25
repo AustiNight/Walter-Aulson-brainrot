@@ -1,7 +1,12 @@
+
 name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +22,9 @@ jobs:
           npm run build
       - name: Inject API Key
         run: |
-          # This replaces the string 'process.env.API_KEY' with your actual secret key
-          # in the built JavaScript files.
+          # Replace placeholder in all built files
+          find dist -type f \( -name "*.html" -o -name "*.js" \) -exec sed -i "s|__API_KEY_PLACEHOLDER__|${{ secrets.API_KEY }}|g" {} +
+          # Backup replacement for the specific process.env string
           find dist -type f -name "*.js" -exec sed -i "s|process.env.API_KEY|\"${{ secrets.API_KEY }}\"|g" {} +
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -26,13 +32,10 @@ jobs:
           path: './dist'
   deploy:
     needs: build
-    permissions:
-      pages: write
-      id-token: write
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
