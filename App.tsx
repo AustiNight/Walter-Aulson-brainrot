@@ -279,16 +279,16 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-8 border-black bg-black gap-2 overflow-hidden shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] md:shadow-[32px_32px_0px_0px_rgba(0,0,0,1)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-8 border-black bg-black gap-2 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] md:shadow-[32px_32px_0px_0px_rgba(0,0,0,1)]">
               {storyResult.panels.map((panel, idx) => (
-                <div key={idx} className="bg-white flex flex-col group relative overflow-hidden border-black">
+                <div key={idx} className="bg-white flex flex-col group relative border-black">
                   <div className="relative overflow-hidden bg-gray-200 aspect-square">
                      <img src={panel.imageUrl} alt={panel.visualDescription} className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" loading="eager" />
                      <div className="absolute top-0 left-0 bg-black text-white px-4 md:px-6 py-2 md:py-3 font-bangers text-2xl md:text-3xl border-r-8 border-b-8 border-black z-10 shadow-xl">{idx + 1}</div>
                   </div>
-                  <div className="p-4 md:p-6 bg-white border-t-8 border-black min-h-[100px] flex items-center justify-center relative z-20">
-                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-white border-l-8 border-t-8 border-black rotate-45"></div>
-                      <p className="text-center font-black text-sm md:text-base leading-tight text-black uppercase tracking-tight italic">"{panel.caption}"</p>
+                  <div className="p-4 md:p-6 bg-white border-t-8 border-black min-h-[100px] flex items-center justify-center relative z-20 pt-10">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-white border-l-8 border-t-8 border-black rotate-45 -z-10"></div>
+                      <p className="text-center font-black text-sm md:text-base leading-tight text-black uppercase tracking-tight italic relative z-10">"{panel.caption}"</p>
                   </div>
                 </div>
               ))}
