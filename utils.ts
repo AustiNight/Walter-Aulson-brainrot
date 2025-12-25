@@ -4,9 +4,9 @@ import { StoryResult } from './types';
 import { PROFANITY_LIST } from './constants';
 
 const getSafeApiKey = (): string => {
-  // Try both window.process and global process
-  const env = (window as any).process?.env || (globalThis as any).process?.env || {};
-  const key = env.API_KEY || '';
+  // Use the process.env.API_KEY directly as required by system instructions.
+  // The shim in index.html ensures 'process' exists.
+  const key = process.env.API_KEY || '';
   return key.replace(/['"]/g, '').trim();
 };
 
@@ -31,7 +31,7 @@ export const italianizeName = (name: string): string => {
 export const generateStoryContent = async (inputs: Record<string, string>): Promise<StoryResult> => {
   const apiKey = getSafeApiKey();
   if (!apiKey || apiKey === '__API_KEY_PLACEHOLDER__') {
-    throw new Error("Mamma Mia! Your API Key is missing. Check your GitHub Secrets!");
+    throw new Error("Mamma Mia! Your API Key is missing. Please check your GitHub Secrets and verify the Action ran successfully.");
   }
   
   const ai = new GoogleGenAI({ apiKey });
