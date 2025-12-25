@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walter Aulson's Italian Brainrot Mad Libs</title>
     <script>
-        // CRITICAL: Define process globally at the very start to prevent crashes
+        // Global shim for process.env
         window.process = { 
             env: { 
                 API_KEY: "__API_KEY_PLACEHOLDER__" 
             } 
         };
-        var process = window.process;
+        // Also provide globalThis variant for absolute safety
+        globalThis.process = window.process;
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
@@ -53,8 +54,8 @@
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div id="root">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #666;">
-            Loading Studio...
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Bangers', sans-serif; font-size: 2rem; color: #666; text-transform: uppercase;">
+            Loading Sequential Hybrid Engine...
         </div>
     </div>
     <script type="module" src="index.tsx"></script>
