@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walter Aulson's Italian Brainrot Mad Libs</title>
     <script>
-        // Global shim for process.env to allow the build script to inject the key safely.
-        // The __API_KEY_PLACEHOLDER__ will be replaced by the GitHub Action.
+        // Global shim for process.env
+        // __API_KEY_PLACEHOLDER__ is replaced during GitHub Actions deployment
         window.process = { 
             env: { 
                 API_KEY: "__API_KEY_PLACEHOLDER__" 
             } 
         };
+        // Ensure 'process' is available as a top-level global
+        var process = window.process;
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
@@ -55,9 +57,18 @@
     <div id="root">
         <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Bangers', cursive; font-size: 3rem; color: #dc2626; text-transform: uppercase; text-align: center; padding: 20px; flex-direction: column;">
             <div>Initializing Studio... 🤌</div>
-            <div style="font-size: 1rem; color: #666; margin-top: 10px; font-family: sans-serif;">(If this hangs, please check the GitHub Actions logs)</div>
+            <div id="debug-msg" style="font-size: 1rem; color: #666; margin-top: 10px; font-family: sans-serif; opacity: 0; transition: opacity 2s;">
+                (If this hangs, please ensure your GitHub Secrets are set up correctly)
+            </div>
         </div>
     </div>
+    <script>
+        // Reveal the help message only if the app takes too long to mount
+        setTimeout(() => {
+            const msg = document.getElementById('debug-msg');
+            if (msg) msg.style.opacity = '1';
+        }, 3000);
+    </script>
     <script type="module" src="index.tsx"></script>
 </body>
 </html>
