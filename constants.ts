@@ -1,5 +1,5 @@
 
-import { QuestionPack } from './types.ts';
+import { QuestionPack } from './types';
 
 export const PROFANITY_LIST = [
   'badword1', 'badword2', 'violence', 'gore', 'weapon', 'drug', 'sexy', 'nude', 'kill', 'death', 'blood', 'hate'
