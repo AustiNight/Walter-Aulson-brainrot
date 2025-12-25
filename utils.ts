@@ -7,13 +7,13 @@ const getSafeApiKey = (): string => {
   // Try the global window variable first
   let key = (window as any).GEMINI_API_KEY || '';
   
-  // If window is empty or still the placeholder, try process.env
-  if (!key || key === '__API_KEY_PLACEHOLDER__') {
+  // If window is empty, try process.env
+  if (!key) {
     key = (window as any).process?.env?.API_KEY || '';
   }
 
   // Final cleanup
-  return key.replace(/['"]/g, '').trim();
+  return (key || '').replace(/['"]/g, '').trim();
 };
 
 export const moderateInput = (inputs: Record<string, string>): { isValid: boolean; errorField?: string } => {
@@ -37,12 +37,16 @@ export const italianizeName = (name: string): string => {
 export const generateStoryContent = async (inputs: Record<string, string>): Promise<StoryResult> => {
   const apiKey = getSafeApiKey();
   
-  if (!apiKey || apiKey === '__API_KEY_PLACEHOLDER__') {
-    throw new Error(`API Key is missing. Check your GitHub Secrets for 'API_KEY'.`);
+  // CRITICAL FIX: We check if it's a placeholder by looking for the prefix 
+  // rather than the full string literal, so the injection script doesn't break this check.
+  const isPlaceholder = apiKey.startsWith('__API') || apiKey.includes('PLACEHOLDER');
+  
+  if (!apiKey || isPlaceholder) {
+    throw new Error(`API Key is missing or still in placeholder state. Check your GitHub Secrets.`);
   }
   
   if (apiKey.length < 20) {
-    throw new Error(`The API Key found is too short (${apiKey.length} chars). It might have been truncated. Key starts with: ${apiKey.substring(0, 5)}...`);
+    throw new Error(`The API Key looks too short. Check your GitHub Secret value.`);
   }
   
   const ai = new GoogleGenAI({ apiKey });
