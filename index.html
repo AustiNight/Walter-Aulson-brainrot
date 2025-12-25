@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walter Aulson's Italian Brainrot Mad Libs</title>
+    <script>
+        // Global shim for process.env to allow the build script to inject the key safely.
+        // The __API_KEY_PLACEHOLDER__ will be replaced by the GitHub Action.
+        window.process = { 
+            env: { 
+                API_KEY: "__API_KEY_PLACEHOLDER__" 
+            } 
+        };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -44,8 +53,9 @@
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div id="root">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Bangers', cursive; font-size: 3rem; color: #dc2626; text-transform: uppercase;">
-            Initializing Studio... 🤌
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Bangers', cursive; font-size: 3rem; color: #dc2626; text-transform: uppercase; text-align: center; padding: 20px; flex-direction: column;">
+            <div>Initializing Studio... 🤌</div>
+            <div style="font-size: 1rem; color: #666; margin-top: 10px; font-family: sans-serif;">(If this hangs, please check the GitHub Actions logs)</div>
         </div>
     </div>
     <script type="module" src="index.tsx"></script>
