@@ -71,6 +71,9 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
+### Important Verification
+After pushing your code, click the **Actions** tab on your GitHub repository. Ensure the workflow runs successfully (green checkmark). If it shows a red X, click it to see why it failed. Usually, it's just a typo in the Secret name.
+
 ## Technical Notes
 - **Free Usage**: This app uses the Gemini Free Tier.
 - **Privacy**: No user data is stored; all generation happens via secure API calls.

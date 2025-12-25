@@ -141,7 +141,7 @@ const App: React.FC = () => {
           </h2>
         </div>
         <p className="mt-6 text-xl text-gray-800 font-bold uppercase tracking-tight">
-          Hyperrealistic Mad Libs Dashboard 🦈👟🤌
+          Hyperrealistic Mad Libs Dashboard {" 🦈👟🤌 "}
         </p>
       </header>
 
@@ -318,15 +318,15 @@ const App: React.FC = () => {
             <div className="space-y-8">
               <div className="border-l-8 border-green-600 pl-6">
                 <h4 className="font-black text-black text-xl uppercase mb-1">Windows 10/11</h4>
-                <p className="text-gray-900 text-lg">Settings &gt; Time & Language &gt; Speech &gt; <strong>Add Voices</strong>. Search for "Italian" and install it!</p>
+                <p className="text-gray-900 text-lg">Settings {" > "} Time & Language {" > "} Speech {" > "} <strong>Add Voices</strong>. Search for "Italian" and install it!</p>
               </div>
               <div className="border-l-8 border-blue-600 pl-6">
                 <h4 className="font-black text-black text-xl uppercase mb-1">macOS / iPhone</h4>
-                <p className="text-gray-900 text-lg">Settings &gt; Accessibility &gt; Spoken Content &gt; <strong>Voices</strong>. Tap Italian and download a "Premium" version!</p>
+                <p className="text-gray-900 text-lg">Settings {" > "} Accessibility {" > "} Spoken Content {" > "} <strong>Voices</strong>. Tap Italian and download a "Premium" version!</p>
               </div>
               <div className="border-l-8 border-yellow-600 pl-6">
                 <h4 className="font-black text-black text-xl uppercase mb-1">Android</h4>
-                <p className="text-gray-900 text-lg">Settings &gt; System &gt; Languages &gt; <strong>Text-to-speech output</strong>. Select Google TTS and install Italian voice data.</p>
+                <p className="text-gray-900 text-lg">Settings {" > "} System {" > "} Languages {" > "} <strong>Text-to-speech output</strong>. Select Google TTS and install Italian voice data.</p>
               </div>
             </div>
             <button 
