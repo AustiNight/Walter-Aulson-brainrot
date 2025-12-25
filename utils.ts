@@ -21,15 +21,13 @@ export const italianizeName = (name: string): string => {
   return base.charAt(0).toUpperCase() + base.slice(1).toLowerCase() + suffix;
 };
 
-// Use a getter for the API key to handle cases where it is injected at runtime or build time
-const getApiKey = () => {
-  // If the secret replacement happened correctly, process.env.API_KEY will be a string
-  return (process.env.API_KEY || '').replace(/['"]/g, '');
-};
-
 export const generateStoryContent = async (inputs: Record<string, string>): Promise<StoryResult> => {
-  const apiKey = getApiKey();
-  if (!apiKey) throw new Error("API Key Missing! Ensure your GitHub Secrets are set up correctly.");
+  // Use process.env.API_KEY directly as required. 
+  // It is provided via the shim in index.html and injected by GitHub Actions.
+  const apiKey = (process.env.API_KEY || '').replace(/['"]/g, '');
+  if (!apiKey || apiKey === '__API_KEY_PLACEHOLDER__') {
+    throw new Error("Mamma Mia! Your API Key is missing. Check your GitHub Secrets!");
+  }
   
   const ai = new GoogleGenAI({ apiKey });
   const inputsString = Object.entries(inputs).map(([k, v]) => `${k}: ${v}`).join(', ');
@@ -77,7 +75,7 @@ export const generateStoryContent = async (inputs: Record<string, string>): Prom
 };
 
 export const generatePanelImage = async (description: string): Promise<string> => {
-  const apiKey = getApiKey();
+  const apiKey = (process.env.API_KEY || '').replace(/['"]/g, '');
   const ai = new GoogleGenAI({ apiKey });
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash-image',
