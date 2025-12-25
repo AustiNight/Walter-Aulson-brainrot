@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { QUESTION_PACKS, BRAINROT_LOADER_CHARS } from './constants.ts';
-import { QuestionPack, StoryResult, Panel } from './types.ts';
-import { moderateInput, italianizeName, generateStoryContent, generatePanelImage } from './utils.ts';
+import { QUESTION_PACKS, BRAINROT_LOADER_CHARS } from './constants';
+import { QuestionPack, StoryResult, Panel } from './types';
+import { moderateInput, italianizeName, generateStoryContent, generatePanelImage } from './utils';
 
 const App: React.FC = () => {
   const [activePack, setActivePack] = useState<QuestionPack>(QUESTION_PACKS[0]);
@@ -94,9 +94,9 @@ const App: React.FC = () => {
         ...story,
         panels: verifiedPanels
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError("The Brainrot engine got a bit dizzy. Try hitting Generate again!");
+      setError(`Mamma Mia! ${err?.message || "The Brainrot engine got a bit dizzy. Try again!"}`);
     } finally {
       setIsGenerating(false);
       setLoadingStep('');
@@ -326,7 +326,7 @@ const App: React.FC = () => {
               </div>
               <div className="border-l-8 border-yellow-600 pl-6">
                 <h4 className="font-black text-black text-xl uppercase mb-1">Android</h4>
-                <p className="text-gray-900 text-lg">Settings {" > "} System {" > "} Languages {" > "} <strong>Text-to-speech output</strong>. Select Google TTS and install Italian voice data.</p>
+                <p className="text-gray-900 text-lg">Settings {" > System > Languages > Text-to-speech output. Select Google TTS and install Italian voice data."}</p>
               </div>
             </div>
             <button 
