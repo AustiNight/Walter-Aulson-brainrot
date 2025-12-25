@@ -4,14 +4,16 @@ import { StoryResult } from './types';
 import { PROFANITY_LIST } from './constants';
 
 const getSafeApiKey = (): string => {
-  // Priority 1: Check the global variable specifically created for injection
-  const globalKey = (window as any).GEMINI_API_KEY;
+  // Try the global window variable first
+  let key = (window as any).GEMINI_API_KEY || '';
   
-  // Priority 2: Fallback to process.env in case it was shimmed successfully
-  const envKey = (window as any).process?.env?.API_KEY;
+  // If window is empty or still the placeholder, try process.env
+  if (!key || key === '__API_KEY_PLACEHOLDER__') {
+    key = (window as any).process?.env?.API_KEY || '';
+  }
 
-  const key = (globalKey || envKey || '').replace(/['"]/g, '').trim();
-  return key;
+  // Final cleanup
+  return key.replace(/['"]/g, '').trim();
 };
 
 export const moderateInput = (inputs: Record<string, string>): { isValid: boolean; errorField?: string } => {
@@ -35,8 +37,12 @@ export const italianizeName = (name: string): string => {
 export const generateStoryContent = async (inputs: Record<string, string>): Promise<StoryResult> => {
   const apiKey = getSafeApiKey();
   
-  if (!apiKey || apiKey === '__API_KEY_PLACEHOLDER__' || apiKey.length < 10) {
-    throw new Error(`API Key is invalid or missing ("${apiKey.substring(0, 5)}..."). Please ensure the GitHub Secret 'API_KEY' is set correctly.`);
+  if (!apiKey || apiKey === '__API_KEY_PLACEHOLDER__') {
+    throw new Error(`API Key is missing. Check your GitHub Secrets for 'API_KEY'.`);
+  }
+  
+  if (apiKey.length < 20) {
+    throw new Error(`The API Key found is too short (${apiKey.length} chars). It might have been truncated. Key starts with: ${apiKey.substring(0, 5)}...`);
   }
   
   const ai = new GoogleGenAI({ apiKey });
