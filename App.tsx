@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { QUESTION_PACKS, BRAINROT_LOADER_CHARS } from './constants';
-import { QuestionPack, StoryResult, Panel } from './types';
-import { moderateInput, italianizeName, generateStoryContent, generatePanelImage } from './utils';
+import { QUESTION_PACKS, BRAINROT_LOADER_CHARS } from './constants.ts';
+import { QuestionPack, StoryResult, Panel } from './types.ts';
+import { moderateInput, italianizeName, generateStoryContent, generatePanelImage } from './utils.ts';
 
 const App: React.FC = () => {
   const [activePack, setActivePack] = useState<QuestionPack>(QUESTION_PACKS[0]);
