@@ -7,10 +7,10 @@
     <title>Walter Aulson's Italian Brainrot Mad Libs</title>
     <script>
         // 1. SECURE SHIMS & API CONFIG
-        // The GitHub Action will replace this placeholder with your real key.
+        // This placeholder is the target for our GitHub Actions injection script.
         window.GEMINI_API_KEY = "__API_KEY_PLACEHOLDER__";
         
-        // Provide process shim for library compatibility
+        // Library compatibility shims
         window.process = { env: { API_KEY: window.GEMINI_API_KEY } };
         window.global = window;
     </script>
