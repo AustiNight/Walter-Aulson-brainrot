@@ -6,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walter Aulson's Italian Brainrot Mad Libs</title>
     <script>
-        // Global shim for process.env
-        // __API_KEY_PLACEHOLDER__ is replaced during GitHub Actions deployment
+        // CRITICAL: Define process globally at the very start to prevent crashes
         window.process = { 
             env: { 
                 API_KEY: "__API_KEY_PLACEHOLDER__" 
             } 
         };
-        // Ensure 'process' is available as a top-level global
         var process = window.process;
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -55,20 +53,10 @@
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div id="root">
-        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: 'Bangers', cursive; font-size: 3rem; color: #dc2626; text-transform: uppercase; text-align: center; padding: 20px; flex-direction: column;">
-            <div>Initializing Studio... 🤌</div>
-            <div id="debug-msg" style="font-size: 1rem; color: #666; margin-top: 10px; font-family: sans-serif; opacity: 0; transition: opacity 2s;">
-                (If this hangs, please ensure your GitHub Secrets are set up correctly)
-            </div>
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #666;">
+            Loading Studio...
         </div>
     </div>
-    <script>
-        // Reveal the help message only if the app takes too long to mount
-        setTimeout(() => {
-            const msg = document.getElementById('debug-msg');
-            if (msg) msg.style.opacity = '1';
-        }, 3000);
-    </script>
     <script type="module" src="index.tsx"></script>
 </body>
 </html>
