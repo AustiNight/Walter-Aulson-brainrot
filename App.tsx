@@ -80,7 +80,7 @@ const App: React.FC = () => {
       
       const verifiedPanels: Panel[] = [];
       for (let i = 0; i < story.panels.length; i++) {
-        setLoadingStep(`Rendering Panel ${i + 1} of 6...`);
+        setLoadingStep(`Rendering Panel ${i + 1} of 6... (Cooldown active)`);
         const p = story.panels[i];
         const imageUrl = await generatePanelImage(p.visualDescription);
         verifiedPanels.push({
@@ -96,7 +96,11 @@ const App: React.FC = () => {
       });
     } catch (err: any) {
       console.error(err);
-      setError(`Mamma Mia! ${err?.message || "The Brainrot engine got a bit dizzy. Try again!"}`);
+      if (err?.message?.includes('429') || err?.message?.includes('quota')) {
+        setError("ENGINE OVERHEATED! 🤌 The free engine is taking a short break. Please wait 60 seconds and try again!");
+      } else {
+        setError(`Mamma Mia! ${err?.message || "The Brainrot engine got a bit dizzy. Try again!"}`);
+      }
     } finally {
       setIsGenerating(false);
       setLoadingStep('');
