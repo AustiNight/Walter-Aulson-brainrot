@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { QUESTION_PACKS, BRAINROT_LOADER_CHARS } from './constants';
 import { QuestionPack, StoryResult, Panel } from './types';
