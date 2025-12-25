@@ -22,9 +22,8 @@ jobs:
           npm run build
       - name: Inject API Key
         run: |
-          # Replace placeholder in all built files
+          # Use a loop to replace strings in every built file for safety
           find dist -type f \( -name "*.html" -o -name "*.js" \) -exec sed -i "s|__API_KEY_PLACEHOLDER__|${{ secrets.API_KEY }}|g" {} +
-          # Backup replacement for the specific process.env string
           find dist -type f -name "*.js" -exec sed -i "s|process.env.API_KEY|\"${{ secrets.API_KEY }}\"|g" {} +
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
