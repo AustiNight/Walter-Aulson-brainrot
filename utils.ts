@@ -67,7 +67,7 @@ export const generateStoryContent = async (inputs: Record<string, string>): Prom
     3. HYBRIDS: Every creature must be a hybrid of an animal and an object.
     4. STORYTELLING: Create a coherent sequential story for Walter.
     5. VISUAL STYLE: Square panels (1:1). Art style: "Hyperrealism" - cinematic photography, 8k, realistic materials.
-    6. SAFETY: PG ONLY.
+    6. SAFETY & CLOTHING: PG ONLY. All characters MUST be described as wearing modest, fully-covering, conservative clothing. Absolutely no shirtless characters or suggestive attire.
     
     USER INPUTS: ${inputsString}.`,
       config: {
@@ -113,7 +113,7 @@ export const generatePanelImage = async (description: string): Promise<string> =
       contents: {
         parts: [
           {
-            text: `Hyperrealism masterpiece, cinematic 8k photography, ultra-detailed photographic textures, realistic materials, Italian Brainrot aesthetic, hybrid animal-object creatures, square aspect ratio, no text. Subject: ${description}`,
+            text: `Hyperrealism masterpiece, cinematic 8k photography, ultra-detailed photographic textures, realistic materials, Italian Brainrot aesthetic, hybrid animal-object creatures, square aspect ratio, no text. CONSERVATIVE MODEST CLOTHING, FULLY CLOTHED, ABSOLUTELY NO NUDITY, NO BARE CHESTS, KID-SAFE FAMILY FRIENDLY ILLUSTRATION. Subject: ${description}`,
           },
         ],
       },
