@@ -1,0 +1,7 @@
+{
+  "name": "Walter's Italian Brainrot Comic Studio",
+  "description": "A surreal, kid-friendly Mad Libs generator that creates 6-panel comic storyboards and AI voiceovers in a post-ironic Italian brainrot style.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
