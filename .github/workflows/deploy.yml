@@ -1,78 +1,59 @@
-
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install & Build
-        run: |
-          npm install
-          npm run build
-      - name: Inject API Key
+          cache: npm
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Inject API key placeholder if secret exists
         env:
-          GEMINI_SECRET: ${{ secrets.API_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
-          node -e "
-            const fs = require('fs');
-            const path = require('path');
-            const secret = process.env.GEMINI_SECRET;
-            
-            if (!secret || secret.length < 10) {
-              console.error('CRITICAL ERROR: Secret API_KEY is missing or empty in GitHub Secrets!');
-              process.exit(1); 
-            }
-            
-            const distPath = 'dist';
-            const files = [];
-            
-            function getFiles(dir) {
-              if (!fs.existsSync(dir)) return;
-              fs.readdirSync(dir).forEach(file => {
-                const fullPath = path.join(dir, file);
-                if (fs.statSync(fullPath).isDirectory()) {
-                  getFiles(fullPath);
-                } else if (file.endsWith('.js') || file.endsWith('.html') || file.endsWith('.txt')) {
-                  files.push(fullPath);
-                }
-              });
-            }
-            
-            getFiles(distPath);
-            console.log('Targeting ' + files.length + ' files for key injection...');
-            
-            let injectionCount = 0;
-            files.forEach(f => {
-              let content = fs.readFileSync(f, 'utf8');
-              if (content.includes('__API_KEY_PLACEHOLDER__')) {
-                const newContent = content.split('__API_KEY_PLACEHOLDER__').join(secret);
-                fs.writeFileSync(f, newContent);
-                console.log('  Successfully injected into: ' + f);
-                injectionCount++;
-              }
-            });
-            
-            if (injectionCount === 0) {
-              console.warn('WARNING: No placeholder tags were found in the build folder. Key may not have been injected.');
-            } else {
-              console.log('Injection complete. Total files modified: ' + injectionCount);
-            }
-          "
-      - name: Upload artifact
+          node -e "const fs=require('fs');const path=require('path');const secret=process.env.API_KEY||'';if(!secret){console.log('API_KEY secret not set; skipping injection.');process.exit(0);}const root='dist';if(!fs.existsSync(root)){console.error('dist directory not found after build.');process.exit(1);}const files=[];const walk=(dir)=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const full=path.join(dir,entry.name);if(entry.isDirectory())walk(full);else if(/\.(js|html|txt)$/.test(entry.name))files.push(full);}};walk(root);let count=0;for(const file of files){const content=fs.readFileSync(file,'utf8');if(content.includes('__API_KEY_PLACEHOLDER__')){fs.writeFileSync(file,content.split('__API_KEY_PLACEHOLDER__').join(secret));count++;}}console.log('Injected API key into '+count+' file(s).');"
+
+      - name: Include permanent carousel assets
+        run: |
+          test -f .well-known/carousel.json
+          test -f preview-carousel.png
+          mkdir -p dist/.well-known
+          cp .well-known/carousel.json dist/.well-known/carousel.json
+          cp preview-carousel.png dist/preview-carousel.png
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

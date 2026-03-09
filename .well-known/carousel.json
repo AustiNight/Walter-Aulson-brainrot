@@ -1,0 +1,9 @@
+{
+  "title": "Walter Aulson's Italian Brainrot Mad Libs",
+  "description": "A chaotic Mad Libs generator with Italian brainrot flavor.",
+  "imageUrl": "https://austinight.github.io/Walter-Aulson-brainrot/preview-carousel.png?v=1",
+  "tags": ["game", "mad-libs", "fun"],
+  "projectKey": "walter-aulson-brainrot",
+  "repoUrl": "https://github.com/AustiNight/Walter-Aulson-brainrot",
+  "carouselText": "Built as a lightweight web game with instant feedback, playful copy generation, and zero-backend static hosting."
+}
