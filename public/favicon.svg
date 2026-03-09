@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Comic style W favicon">
+  <defs>
+    <radialGradient id="burst" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#fff7b0"/>
+      <stop offset="100%" stop-color="#ffd52e"/>
+    </radialGradient>
+    <linearGradient id="letter" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff3a2f"/>
+      <stop offset="100%" stop-color="#b00000"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="4" y="4" width="56" height="56" rx="10" fill="url(#burst)" stroke="#000" stroke-width="4"/>
+
+  <g stroke="#000" stroke-width="2" opacity="0.35">
+    <path d="M12 14 L21 23"/>
+    <path d="M18 10 L28 20"/>
+    <path d="M44 12 L52 20"/>
+    <path d="M40 18 L50 28"/>
+    <path d="M11 43 L22 54"/>
+    <path d="M15 37 L27 49"/>
+    <path d="M40 42 L52 54"/>
+  </g>
+
+  <path d="M13 17 L20 17 L25 45 L31 28 L37 45 L43 17 L51 17 L43 51 L36 51 L31 38 L26 51 L19 51 Z"
+        fill="url(#letter)" stroke="#000" stroke-width="4" stroke-linejoin="round"/>
+
+  <path d="M16 20 L21 20 L25 42 L31 26 L37 42 L41 20 L47 20 L41 48 L36 48 L31 35 L27 48 L22 48 Z"
+        fill="none" stroke="#fffbf0" stroke-width="2" opacity="0.8"/>
+
+  <circle cx="49" cy="14" r="4" fill="#fff" opacity="0.75"/>
+</svg>
