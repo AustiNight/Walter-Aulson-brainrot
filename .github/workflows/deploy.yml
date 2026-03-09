@@ -45,6 +45,7 @@ jobs:
         run: |
           test -f .well-known/carousel.json
           test -f preview-carousel.png
+          touch dist/.nojekyll
           mkdir -p dist/.well-known
           cp .well-known/carousel.json dist/.well-known/carousel.json
           cp preview-carousel.png dist/preview-carousel.png
